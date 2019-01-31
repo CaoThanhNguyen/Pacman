@@ -50,7 +50,6 @@ function displayWorld() {
         }
         output += "\n</div>";
     }
-    // console.log(output);
     document.getElementById("world").innerHTML = output;
 }
 displayWorld();
@@ -115,22 +114,22 @@ document.onkeydown = function(e) {
     if (isEnd == true) return;
     console.log(e.keyCode);
     if (e.keyCode == 37) { // Left key
-        if (pacman.x - 1 >= 0 && world[pacman.y][pacman.x - 1] != 2) {
+        if (canMove(pacman.x, pacman.y, "left")) {
             pacman.x--;
         }
         pacman.direction = "left";
     } else if (e.keyCode == 39) { // Right key
-        if (pacman.x + 1 < world[0].length && world[pacman.y][pacman.x + 1] != 2) {
+        if (canMove(pacman.x, pacman.y, "right")) {
             pacman.x++;
         }
         pacman.direction = "right";
-    } else if (e.keyCode == 38 && world[pacman.y - 1][pacman.x] != 2) { // Up key
-        if (pacman.y - 1 >= 0) {
+    } else if (e.keyCode == 38) { // Up key
+        if (canMove(pacman.x, pacman.y, "up")) {
             pacman.y--;
         }
         pacman.direction = "up";
     } else if (e.keyCode == 40) { // Down key
-        if (pacman.y + 1 < world.length && world[pacman.y + 1][pacman.x] != 2) {
+        if (canMove(pacman.x, pacman.y, "down")) {
             pacman.y++;
         }
         pacman.direction = "down";
