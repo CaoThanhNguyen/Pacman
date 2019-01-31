@@ -52,10 +52,14 @@ function displayWorld() {
     }
     document.getElementById("world").innerHTML = output;
 }
+
 displayWorld();
 displayPacman();
 displayScore();
 displayGhost();
+setInterval(function() {
+    moveGhost();
+}, 300);
 
 function displayPacman() {
     var rotateDeg = "";
@@ -87,21 +91,37 @@ function displayGhost() {
 }
 
 function moveGhost() {
+    console.log("Ghost moving...");
     // set random direction for ghost
-    var direction = Math.floor(Math.random * 4);
-    console.log("ghost-direction = ", direction);
+    var direction = Math.floor(Math.random() * 4);
+    console.log("Where is ghost moving...?", direction);
     if (direction == 0) { // left
-
+        if (canMove(ghost.x, ghost.y, "left")) {
+            ghost.x--;
+        }
+    } else if (direction == 1) { // right
+        if (canMove(ghost.x, ghost.y, "right")) {
+            ghost.x++;
+        }
+    } else if (direction == 2) { // up
+        if (canMove(ghost.x, ghost.y, "up")) {
+            ghost.y--;
+        }
+    } else if (direction == 3) { // down
+        if (canMove(ghost.x, ghost.y, "down")) {
+            ghost.y++;
+        }
     }
+    displayGhost();
 }
 
 function canMove(currentX, currentY, direction) {
     if (direction === "left") {
-        return (currentX - 1 >= 0 && world[currentY][currentX] != 2);
+        return (currentX - 1 >= 0 && world[currentY][currentX - 1] != 2);
     } else if (direction === "right") {
         return (currentX + 1 < world[0].length && world[currentY][currentX + 1] != 2);
     } else if (direction === "up") {
-        return (currentY + 1 < world.length && world[currentY + 1][currentX] != 2);
+        return (currentY - 1 >= 0 && world[currentY - 1][currentX] != 2);
     } else if (direction === "down") {
         return (currentY + 1 < world.length && world[currentY + 1][currentX] != 2);
     } else {
